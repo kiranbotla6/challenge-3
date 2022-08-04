@@ -1,0 +1,23 @@
+def Key(object):
+    keys = list(object)
+    if len(keys) > 1:
+        return None
+    else:
+        return keys[0]
+
+def Nestedobject(object, key, obtained=False):
+    if type(object) is dict and obtained:
+        return None
+    if (obtained or (key in object.keys())) :
+        if type(key) is dict:
+            return Nestedobject(object[key], Key(object[key]), True)
+        else:
+            return object[Key(object)]
+    else:
+        nestedKey = Key(object)
+        return Nestedobject(object[nestedKey], key, False)
+
+if __name__ == '__main__':
+    object = {'x': {'y': {'z': 'a'}}}
+    value = Nestedobject(object,'z')
+    print(value)
